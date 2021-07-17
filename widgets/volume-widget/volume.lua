@@ -84,7 +84,7 @@ local function worker(user_args)
     function volume:inc()
         awful.spawn.easy_async(INC_VOLUME_CMD, function(stdout)
             update_level(volume.widget, stdout)
-            awful.spawn(PLAY_SOUND_CMD)
+            awful.spawn(PLAY_SOUND_CMD, false)
             noti_id = naughty.notify({
                 title = 'volume',
                 text = current_level .. ' %',
@@ -97,7 +97,7 @@ local function worker(user_args)
     function volume:dec()
         awful.spawn.easy_async(DEC_VOLUME_CMD, function(stdout)
             update_level(volume.widget, stdout)
-            awful.spawn(PLAY_SOUND_CMD)
+            awful.spawn(PLAY_SOUND_CMD, false)
             noti_id = naughty.notify({
                 title = 'volume',
                 text = current_level .. ' %',
