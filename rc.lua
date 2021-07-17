@@ -652,8 +652,13 @@ end)
 client.connect_signal('property::floating', function(c) awful.placement.centered(c) end)
 
 client.connect_signal('property::fullscreen', function(c)
-    if c.fullscreen then c.shape = gears.shape.rectangle
-    else c.shape = function(cr,w,h) gears.shape.rounded_rect(cr,w,h,8) end end
+    if c.fullscreen then
+        c.shape = gears.shape.rectangle
+        naughty.suspend()
+    else
+        c.shape = function(cr,w,h) gears.shape.rounded_rect(cr,w,h,8) end
+        naughty.resume()
+    end
 end)
 
 client.connect_signal('property::urgent', function(c)
