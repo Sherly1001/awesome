@@ -22,7 +22,6 @@ local volume_widget = require('widgets.volume-widget.volume')
 local brightness_widget = require('widgets.brightness-widget.brightness')
 local calendar_widget = require('widgets.calendar-widget.calendar')
 local cpu_widget = require('widgets.cpu-widget.cpu-widget')
-local logout_menu = require('widgets.logout-menu-widget.logout-menu')
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -96,25 +95,22 @@ awful.layout.layouts = {
 
 -- {{{ Menu
 -- Create a launcher widget and a main menu
-myawesomemenu = {
-    { 'hotkeys', function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
-    { 'manual', terminal .. ' -e man awesome' },
-    { 'edit config', 'gvim ' .. awesome.conffile },
-    { 'restart', awesome.restart },
-    { 'quit', function() awesome.quit() end },
-}
-
-mymainmenu = awful.menu({
+mylogoutmenu = awful.menu({
     items = {
-        { 'awesome', myawesomemenu, beautiful.awesome_icon },
-        { 'open terminal', terminal },
+         { "Logout",    function() awesome.quit() end },
+         { "Restart",   awesome.restart },
+         { "Sleep",     function() awful.spawn.with_shell("systemctl suspend") end },
+         { "Power off", function() awful.spawn.with_shell("shutdown now") end },
     }
 })
 
 mylauncher = awful.widget.launcher({
     image = beautiful.awesome_icon,
-    menu = mymainmenu,
+    menu = mylogoutmenu,
 })
+
+-- Close menu when mouse leave it
+mylogoutmenu.wibox:connect_signal("mouse::leave", function() mylogoutmenu:hide() end)
 
 -- Menubar configuration
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
@@ -248,9 +244,6 @@ awful.screen.connect_for_each_screen(function(s)
             },
             wibox.widget.systray(),
             mytextclock,
-            logout_menu {
-                font = 'sans 12',
-            },
             s.mylayoutbox,
         },
     }
@@ -259,7 +252,7 @@ end)
 
 -- {{{ Mouse bindings
 root.buttons(gears.table.join(
-    awful.button({ }, 3, function() mymainmenu:toggle() end)
+    awful.button({ }, 3, function() mylogoutmenu:toggle() end)
     -- awful.button({ }, 4, awful.tag.viewnext),
     -- awful.button({ }, 5, awful.tag.viewprev)
 ))
@@ -280,7 +273,7 @@ globalkeys = gears.table.join(
               {description = 'focus next by index', group = 'client'}),
     awful.key({ modkey }, 'k', function() awful.client.focus.byidx(-1) end,
               {description = 'focus previous by index', group = 'client'}),
-    awful.key({ modkey }, 'w', function() mymainmenu:show() end,
+    awful.key({ modkey }, 'w', function() mylogoutmenu:show() end,
               {description = 'show main menu', group = 'awesome'}),
 
     -- Layout manipulation
@@ -619,29 +612,37 @@ client.connect_signal('request::titlebars', function(c)
         end)
     )
 
-    awful.titlebar(c):setup {
-        { -- Left
-            awful.titlebar.widget.iconwidget(c),
-            buttons = buttons,
-            layout  = wibox.layout.fixed.horizontal
-        },
-        { -- Middle
-            { -- Title
-                align  = 'center',
-                widget = awful.titlebar.widget.titlewidget(c)
-            },
-            buttons = buttons,
-            layout  = wibox.layout.flex.horizontal
-        },
-        { -- Right
-            awful.titlebar.widget.floatingbutton (c),
-            awful.titlebar.widget.maximizedbutton(c),
-            awful.titlebar.widget.stickybutton   (c),
-            awful.titlebar.widget.ontopbutton    (c),
-            awful.titlebar.widget.closebutton    (c),
-            layout = wibox.layout.fixed.horizontal()
-        },
-        layout = wibox.layout.align.horizontal
+    awful.titlebar(c, {size = 30}) : setup {
+       {-- Left
+          {
+             awful.titlebar.widget.closebutton    (c),
+             awful.titlebar.widget.minimizebutton (c),
+             awful.titlebar.widget.maximizedbutton(c),
+             spacing = 7,
+             layout  = wibox.layout.flex.horizontal
+          },
+          margins = 6,
+          widget = wibox.container.margin
+       },
+       { -- Middle
+          { -- Title
+             align  = "center",
+             widget = awful.titlebar.widget.titlewidget(c)
+          },
+          buttons = buttons,
+          layout  = wibox.layout.flex.horizontal
+       },
+       {-- Right
+          {
+             awful.titlebar.widget.ontopbutton     (c),
+             awful.titlebar.widget.floatingbutton  (c),
+             spacing = 7,
+             layout  = wibox.layout.flex.horizontal
+          },
+          margins = 6,
+          widget = wibox.container.margin
+       },
+       layout = wibox.layout.align.horizontal
     }
 end)
 
@@ -649,6 +650,7 @@ end)
 -- client.connect_signal('mouse::enter', function(c)
 --     c:emit_signal('request::activate', 'mouse_enter', {raise = false})
 -- end)
+
 client.connect_signal('property::floating', function(c) awful.placement.centered(c) end)
 
 client.connect_signal('property::fullscreen', function(c)
