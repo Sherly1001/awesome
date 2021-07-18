@@ -94,12 +94,14 @@ awful.layout.layouts = {
 -- Create a launcher widget and a main menu
 mylogoutmenu = awful.menu({
     items = {
-         { "Logout",    function() awesome.quit() end },
-         { "Restart",   awesome.restart },
-         { "Sleep",     function() awful.spawn.with_shell("systemctl suspend") end },
-         { "Power off", function() awful.spawn.with_shell("shutdown now") end },
+        { 'Log out',   function() awesome.quit() end, beautiful.logout_icon},
+        { 'Reboot',    function() awful.spawn.with_shell('systemctl reboot') end , beautiful.reboot_icon },
+        { 'Sleep',     function() awful.spawn.with_shell('systemctl suspend') end, beautiful.sleep_icon },
+        { 'Power off', function() awful.spawn.with_shell('systemctl poweroff') end, beautiful.poweroff_icon },
     }
 })
+
+mylogoutmenu.wibox.shape = function(cr, w, h) gears.shape.rounded_rect(cr,w,h,beautiful.border_radius) end
 
 mylauncher = awful.widget.launcher({
     image = beautiful.awesome_icon,
@@ -107,7 +109,7 @@ mylauncher = awful.widget.launcher({
 })
 
 -- Close menu when mouse leave it
-mylogoutmenu.wibox:connect_signal("mouse::leave", function() mylogoutmenu:hide() end)
+mylogoutmenu.wibox:connect_signal('mouse::leave', function() mylogoutmenu:hide() end)
 
 -- Menubar configuration
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
@@ -367,8 +369,8 @@ globalkeys = gears.table.join(
     awful.key({ }, 'XF86AudioLowerVolume', function() volume_widget:dec() end),
 
     -- run application keys
-    awful.key({ modkey }, 'g', function() awful.spawn('firefox') end),
-    awful.key({ modkey, 'Shift'}, 'g', function() awful.spawn('firefox --private-window') end),
+    awful.key({ modkey }, 'g', function() awful.spawn('google-chrome-stable') end),
+    awful.key({ modkey, 'Shift'}, 'g', function() awful.spawn('google-chrome-stable --incognito') end),
     awful.key({ modkey }, 'Print', function() awful.spawn('flameshot gui') end)
 )
 
@@ -635,7 +637,7 @@ client.connect_signal('request::titlebars', function(c)
        },
        { -- Middle
           { -- Title
-             align  = "center",
+             align  = 'center',
              widget = awful.titlebar.widget.titlewidget(c)
           },
           buttons = buttons,

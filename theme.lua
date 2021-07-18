@@ -58,15 +58,13 @@ theme.taglist_fg_empty    = '#828282'
 theme.taglist_spacing     = 2
 theme.taglist_font = 'awesomewm-font 13'
 
-theme.menu_height = dpi(20)
-theme.menu_width  = dpi(90)
-theme.menu_font   = 'sans 10'
+theme.menu_height = dpi(24)
+theme.menu_width  = dpi(100)
+theme.menu_font = 'sans 10'
+theme.menu_bg_normal = '#00000090'
+theme.menu_border_width	= 5
+theme.menu_border_color = '#000000'
 theme.menu_submenu_icon = theme_path..'/submenu.png'
-
-theme.logout_icon = theme_path..'launcher/logout.svg'
-theme.restart_icon = theme_path..'launcher/restart.svg'
-theme.sleep_icon = theme_path..'launcher/sleep.svg'
-theme.poweroff_icon = theme_path..'launcher/poweroff.svg'
 
 theme.titlebar_bg        = '#000000'
 theme.titlebar_bg_normal = '#222222'
@@ -116,6 +114,11 @@ theme.layout_cornernw = theme_path..'layouts/cornernww.png'
 theme.layout_cornerne = theme_path..'layouts/cornernew.png'
 theme.layout_cornersw = theme_path..'layouts/cornersww.png'
 theme.layout_cornerse = theme_path..'layouts/cornersew.png'
+
+theme.logout_icon = theme_path..'launcher/logout.svg'
+theme.reboot_icon = theme_path..'launcher/reboot.svg'
+theme.sleep_icon = theme_path..'launcher/sleep.svg'
+theme.poweroff_icon = theme_path..'launcher/poweroff.svg'
 
 -- Generate Awesome icon:
 theme.awesome_icon = theme_assets.awesome_icon(
