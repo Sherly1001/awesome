@@ -59,6 +59,7 @@ naughty.config.defaults.margin = 10
 terminal = 'sakura'
 editor = os.getenv('EDITOR') or 'vim'
 editor_cmd = terminal .. ' -e ' .. editor
+pictures_dir = '/cmn/anime_pictures/'
 
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
@@ -157,9 +158,20 @@ local tasklist_buttons = gears.table.join(
     awful.button({ }, 5, function() awful.client.focus.byidx(-1) end)
 )
 
-local function set_wallpaper(s)
+local function set_wallpaper(s, pic_dir)
     -- Wallpaper
-    if beautiful.wallpaper then
+    if pic_dir ~= nil and gears.filesystem.dir_readable(pic_dir) then
+        awful.spawn(string.format([=[bash -c '
+        [[ -f /tmp/bg_pid ]] && kill `cat /tmp/bg_pid`
+        echo $$ > /tmp/bg_pid
+        while true; do
+            for img in `eval find "%s" | shuf`; do
+                feh --no-fehbg --bg-fill $img
+                echo $img > /tmp/cur_bg
+                sleep 60
+            done
+        done']=], pic_dir), false)
+    elseif beautiful.wallpaper then
         local wallpaper = beautiful.wallpaper
         -- If wallpaper is a function, call it with the screen
         if type(wallpaper) == 'function' then
@@ -175,7 +187,7 @@ screen.connect_signal('property::geometry', set_wallpaper)
 
 awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
-    set_wallpaper(s)
+    set_wallpaper(s, pictures_dir)
 
     -- Each screen has its own tag table.
     awful.tag(tag_names, s, awful.layout.layouts[1])
@@ -550,6 +562,7 @@ awful.rules.rules = {
           'veromix',
           'xtightvncviewer',
           'Rofi',
+          'feh',
         },
 
         -- Note that the name property shown in xprop might be set slightly after creation of the client
