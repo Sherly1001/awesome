@@ -50,11 +50,7 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
-if not beautiful.init('~/.config/awesome/theme.lua') then
-    naughty.notify {
-        text = 'huhu'
-    }
-end
+beautiful.init('~/.config/awesome/theme.lua')
 
 naughty.config.spacing = 10
 naughty.config.defaults.margin = 10
