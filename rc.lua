@@ -604,7 +604,7 @@ client.connect_signal('manage', function(c)
         -- Prevent clients from being unreachable after screen count changes.
         awful.placement.no_offscreen(c)
     end
-    c.shape = function(cr,w,h) gears.shape.rounded_rect(cr,w,h,8) end
+    c.shape = function(cr,w,h) gears.shape.rounded_rect(cr,w,h,beautiful.boder_radius) end
 end)
 
 -- Add a titlebar if titlebars_enabled is set to true in the rules.
@@ -667,7 +667,7 @@ client.connect_signal('property::fullscreen', function(c)
         c.shape = gears.shape.rectangle
         naughty.suspend()
     else
-        c.shape = function(cr,w,h) gears.shape.rounded_rect(cr,w,h,8) end
+        c.shape = function(cr,w,h) gears.shape.rounded_rect(cr,w,h,beautiful.boder_radius) end
         naughty.resume()
     end
 end)
