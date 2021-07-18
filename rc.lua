@@ -682,9 +682,9 @@ local startup_cmds = {
 }
 
 for _, cmd in pairs(startup_onces) do
-    awful.spawn.single_instance(cmd)
+    awful.spawn.single_instance(cmd, false)
 end
 
 for _, cmd in pairs(startup_cmds) do
-    awful.spawn(cmd)
+    awful.spawn(cmd, false)
 end
