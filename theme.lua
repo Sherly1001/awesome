@@ -32,7 +32,7 @@ theme.notification_fg           = '#eeeeeeee'
 theme.notification_bg           = '#36393fe0'
 theme.notification_border_color = '#292b2f70'
 theme.notification_width        = 380
-theme.notification_max_height   = 260
+theme.notification_max_height   = 560
 theme.notification_icon_size    = 64
 
 theme.notification_shape      = function(cr,w,h)
