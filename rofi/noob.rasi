@@ -32,7 +32,6 @@
 window {
     background-color: @background;
     border:           none;
-    border-radius:    2em;
     padding:          1em;
 }
 mainbox {
