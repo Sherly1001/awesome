@@ -77,10 +77,10 @@ awful.layout.layouts = {
     awful.layout.suit.tile.top,
     awful.layout.suit.fair,
     awful.layout.suit.fair.horizontal,
+    awful.layout.suit.max,
     awful.layout.suit.floating,
     -- awful.layout.suit.spiral,
     -- awful.layout.suit.spiral.dwindle,
-    -- awful.layout.suit.max,
     -- awful.layout.suit.max.fullscreen,
     -- awful.layout.suit.magnifier,
     -- awful.layout.suit.corner.nw,
@@ -367,11 +367,13 @@ globalkeys = gears.table.join(
     awful.key({ }, 'XF86AudioMute', function() volume_widget:toggle() end),
     awful.key({ }, 'XF86AudioRaiseVolume', function() volume_widget:inc() end),
     awful.key({ }, 'XF86AudioLowerVolume', function() volume_widget:dec() end),
+    awful.key({ }, 'XF86Tools', function() brightness_widget:inc() end),
+    awful.key({ }, 'XF86Calculator', function() brightness_widget:dec() end),
 
     -- run application keys
     awful.key({ modkey }, 'g', function() awful.spawn('google-chrome-stable') end),
     awful.key({ modkey, 'Shift'}, 'g', function() awful.spawn('google-chrome-stable --incognito') end),
-    awful.key({ modkey }, 'Print', function() awful.spawn('flameshot gui') end)
+    awful.key({ modkey }, 'Print', function() awful.spawn('flameshot gui', false) end)
 )
 
 clientkeys = gears.table.join(
