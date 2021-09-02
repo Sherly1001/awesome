@@ -47,6 +47,7 @@ textbox {
     text-color: @foreground;
 }
 listview {
+    lines:        10;
     fixed-height: 0;
     border:       2px 0px 0px;
     border-color: @separatorcolor;
@@ -98,6 +99,8 @@ element-icon {
     size: 32px;
 }
 element-text {
+    text-color: inherit;
+    background-color: inherit;
     vertical-align: 0.5;
 }
 scrollbar {
