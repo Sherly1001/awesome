@@ -394,6 +394,7 @@ clientkeys = gears.table.join(
               {description = 'toggle keep on top', group = 'client'}),
     awful.key({ modkey,           }, 'n', function(c) c.minimized = true end ,
               {description = 'minimize', group = 'client'}),
+    awful.key({ modkey, 'Control' }, 'f', function(c) c.focusable = false end),
     awful.key({ modkey,           }, 'm', function(c)
             c.maximized = not c.maximized
             c:raise()
@@ -553,6 +554,7 @@ awful.rules.rules = {
           'copyq',  -- Includes session name in class.
           'pinentry',
           'pavucontrol',
+          'blueberry.py',
         },
         class = {
           'Arandr',
