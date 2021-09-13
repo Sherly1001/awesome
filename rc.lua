@@ -270,7 +270,7 @@ root.buttons(gears.table.join(
 
 -- {{{ Key bindings
 globalkeys = gears.table.join(
-    awful.key({ modkey }, 's', hotkeys_popup.show_help,
+    awful.key({        }, 'F1', hotkeys_popup.show_help,
               {description = 'show help', group = 'awesome'}),
     awful.key({ modkey }, 'Left', awful.tag.viewprev,
               {description = 'view previous', group = 'tag'}),
@@ -395,6 +395,7 @@ clientkeys = gears.table.join(
     awful.key({ modkey,           }, 'n', function(c) c.minimized = true end ,
               {description = 'minimize', group = 'client'}),
     awful.key({ modkey, 'Control' }, 'f', function(c) c.focusable = false end),
+    awful.key({ modkey,           }, 's', function(c) c.sticky = not c.sticky end),
     awful.key({ modkey,           }, 'm', function(c)
             c.maximized = not c.maximized
             c:raise()
