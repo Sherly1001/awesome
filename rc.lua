@@ -22,6 +22,7 @@ local volume_widget = require('widgets.volume-widget.volume')
 local brightness_widget = require('widgets.brightness-widget.brightness')
 local calendar_widget = require('widgets.calendar-widget.calendar')
 local cpu_widget = require('widgets.cpu-widget.cpu-widget')
+local network_widget = require('widgets.network-widget.network')
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -252,6 +253,7 @@ awful.screen.connect_for_each_screen(function(s)
             cpu_widget {
                 enable_kill_button = true,
             },
+            network_widget(),
             wibox.widget.systray(),
             mytextclock,
             s.mylayoutbox,
