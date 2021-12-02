@@ -57,7 +57,7 @@ naughty.config.spacing = 10
 naughty.config.defaults.margin = 10
 
 -- This is used later as the default terminal and editor to run.
-terminal = 'sakura'
+terminal = 'alacritty'
 editor = os.getenv('EDITOR') or 'vim'
 editor_cmd = terminal .. ' -e ' .. editor
 pictures_dir = '/cmn/anime_pictures/'
@@ -605,6 +605,7 @@ awful.rules.rules = {
     -- Set Firefox to always map on the tag named '2' on screen 1.
     { rule = { class = 'discord' }, properties = { screen = 1, tag = tag_names[6] } },
     { rule = { class = 'Sakura' }, properties = { screen = 1, tag = tag_names[2] } },
+    { rule = { class = 'Alacritty' }, properties = { screen = 1, tag = tag_names[2] } },
 }
 -- }}}
 
