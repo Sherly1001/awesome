@@ -309,9 +309,15 @@ globalkeys = gears.table.join(
     --     {description = 'go back', group = 'client'}),
 
     -- Standard program
-    awful.key({ modkey,           }, 'Return', function() awful.spawn(terminal) end,
+    awful.key({ modkey,           }, 'Return', function()
+        local screen = awful.screen.focused()
+        local tag = screen.tags[2]
+        if tag then
+            tag:view_only()
+        end
+        awful.spawn(terminal) end,
               {description = 'open a terminal', group = 'launcher'}),
-    awful.key({ modkey, 'Shift'   }, 'Return', function() awful.spawn(terminal, { tag = mouse.screen.selected_tag }) end,
+    awful.key({ modkey, 'Shift'   }, 'Return', function() awful.spawn(terminal) end,
               {description = 'open a terminal in current tag', group = 'launcher'}),
     awful.key({ modkey, 'Control' }, 'r', awesome.restart,
               {description = 'reload awesome', group = 'awesome'}),
@@ -604,8 +610,8 @@ awful.rules.rules = {
 
     -- Set Firefox to always map on the tag named '2' on screen 1.
     { rule = { class = 'discord' }, properties = { screen = 1, tag = tag_names[6] } },
-    { rule = { class = 'Sakura' }, properties = { screen = 1, tag = tag_names[2] } },
-    { rule = { class = 'Alacritty' }, properties = { screen = 1, tag = tag_names[2] } },
+    -- { rule = { class = 'Sakura' }, properties = { screen = 1, tag = tag_names[2] } },
+    -- { rule = { class = 'Alacritty' }, properties = { screen = 1, tag = tag_names[2] } },
 }
 -- }}}
 
